@@ -3,17 +3,98 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+variables:
+  - group: node-demo-var-group
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+resources:
+      containers:
+      - container: mongodb
+        image: mongo:3
+        ports:
+        - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: $(MONGO_INITDB_ROOT_USERNAME)
+          MONGO_INITDB_ROOT_PASSWORD: $(MONGO_INITDB_ROOT_PASSWORD)
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+      - container: node
+        endpoint: atcsandbox1
+        image: atcsandbox1.azurecr.io/conduit-svc:mynode8
+        env:
+          NODE_ENV: $(NODE_ENV)
+          MONGODB_URI: $(MONGODB_URI)
+
+stages:
+- stage: BUILD
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-16.04'
+
+    container: node
+
+    services:
+      mongodb: mongodb
+
+    steps:
+    - script: |
+        yarn
+        yarn run start & sleep 5
+        curl http://localhost:3000/api/tags
+        yarn run test
+      displayName: Application Testing
+
+    - script: ls -l
+      displayName: Confirm Directory Contents
+      condition: always()
+
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '*.xml'
+        searchFolder: './results'
+      condition: always()
+
+- stage: DEV
+  jobs:
+  - deployment: dev
+    environment: dev
+    displayName: DEV Deployment
+    pool:
+      vmImage: 'ubuntu-16.04'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: AzureWebAppContainer@1
+              inputs:
+                azureSubscription: 'GET Cloud-Sandbox(33a6b2c9-623b-4dad-acda-0a68f726abfc)'
+                appName: 'ado-demo-app-dev'
+                containers: 'atcsandbox1.azurecr.io/conduit-svc:mynode8'
+                appSettings: '-WEBSITES_PORT 3000 -NODE_ENV production -SECRET secret -MONGODB_URI $(MONGODB_URI_ACI)'
+
+- stage: PROD
+  dependsOn: DEV
+  jobs:
+    - deployment: prod
+      environment: prod
+      displayName: PROD Deployment
+      pool:
+        vmImage: 'ubuntu-16.04'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - task: AzureWebAppContainer@1
+                inputs:
+                  azureSubscription: 'GET Cloud-Sandbox(33a6b2c9-623b-4dad-acda-0a68f726abfc)'
+                  appName: 'ado-demo-app-prod'
+                  containers: 'atcsandbox1.azurecr.io/conduit-svc:mynode8'
+                  appSettings: '-WEBSITES_PORT 3000 -NODE_ENV production -SECRET secret -MONGODB_URI $(MONGODB_URI_ACI)'
