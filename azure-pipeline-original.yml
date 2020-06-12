@@ -61,3 +61,40 @@ stages:
         testResultsFiles: '*.xml'
         searchFolder: './results'
       condition: always()
+
+- stage: DEV
+  jobs:
+  - deployment: dev
+    environment: dev
+    displayName: DEV Deployment
+    pool:
+      vmImage: 'ubuntu-16.04'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: AzureWebAppContainer@1
+              inputs:
+                azureSubscription: 'GET Cloud-Sandbox(33a6b2c9-623b-4dad-acda-0a68f726abfc)'
+                appName: 'ado-demo-app-dev'
+                containers: 'atcsandbox1.azurecr.io/conduit-svc:mynode8'
+                appSettings: '-WEBSITES_PORT 3000 -NODE_ENV production -SECRET secret -MONGODB_URI $(MONGODB_URI_ACI)'
+
+- stage: PROD
+  dependsOn: DEV
+  jobs:
+    - deployment: prod
+      environment: prod
+      displayName: PROD Deployment
+      pool:
+        vmImage: 'ubuntu-16.04'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - task: AzureWebAppContainer@1
+                inputs:
+                  azureSubscription: 'GET Cloud-Sandbox(33a6b2c9-623b-4dad-acda-0a68f726abfc)'
+                  appName: 'ado-demo-app-prod'
+                  containers: 'atcsandbox1.azurecr.io/conduit-svc:mynode8'
+                  appSettings: '-WEBSITES_PORT 3000 -NODE_ENV production -SECRET secret -MONGODB_URI $(MONGODB_URI_ACI)'
