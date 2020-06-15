@@ -9,7 +9,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+- none
 
 variables:
   - group: node-demo-var-group
@@ -44,6 +44,10 @@ stages:
       mongodb: mongodb
 
     steps:
+    - task: YarnInstaller@3
+      inputs:
+        versionSpec: '1.x'
+    
     - script: |
         yarn
         yarn run start & sleep 5
