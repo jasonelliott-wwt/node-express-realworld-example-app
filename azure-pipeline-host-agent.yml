@@ -24,12 +24,12 @@ resources:
           MONGO_INITDB_ROOT_USERNAME: $(MONGO_INITDB_ROOT_USERNAME)
           MONGO_INITDB_ROOT_PASSWORD: $(MONGO_INITDB_ROOT_PASSWORD)
 
-      - container: node
-        endpoint: atcsandbox1
-        image: atcsandbox1.azurecr.io/conduit-svc:mynode8
-        env:
-          NODE_ENV: $(NODE_ENV)
-          MONGODB_URI: $(MONGODB_URI)
+#      - container: node
+#        endpoint: atcsandbox1
+#        image: atcsandbox1.azurecr.io/conduit-svc:mynode8
+#        env:
+#          NODE_ENV: $(NODE_ENV)
+#          MONGODB_URI: $(MONGODB_URI)
 
 stages:
 - stage: BUILD
@@ -47,13 +47,17 @@ stages:
     - task: YarnInstaller@3
       inputs:
         versionSpec: '1.x'
-    
-    - script: |
-        yarn
-        yarn run start & sleep 5
-        curl http://localhost:3000/api/tags
-        yarn run test
+
+    - task: Yarn@3
+      inputs:
+        arguments: 'run start & sleep 5'
+
+    - script: curl http://localhost:3000/api/tags
       displayName: Application Testing
+
+    - task: Yarn@3
+      inputs:
+        arguments: 'run test'
 
     - script: ls -l
       displayName: Confirm Directory Contents
