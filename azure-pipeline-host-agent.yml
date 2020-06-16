@@ -45,7 +45,7 @@ stages:
         publishDirectory: '$(Build.ArtifactStagingDirectory)'
         feedsToUsePublish: 'internal'
         vstsFeedPublish: '5231d8a1-0c0d-4c0c-a48a-672567c57865'
-        vstsFeedPackagePublish: 'jasonelliott-wwt.azure-pipeline-host-agent'
+        vstsFeedPackagePublish: 'jasonelliott-wwt.node-demo-host-agent'
         versionOption: 'patch'
 
     - task: RestoreAndSaveCache@1
