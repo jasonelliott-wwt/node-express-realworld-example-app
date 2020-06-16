@@ -49,13 +49,15 @@ stages:
       inputs:
         versionSpec: '1.x'
       displayName: Install Yarn
-    - task: Npm@1
-      inputs:
-        command: 'custom'
-        workingDir: '/home/vsts/work/1/s'
-        customCommand: 'install newman'
-      condition: ne(variables['CacheRestored'], 'true')
-      displayName: Install Newman
+
+#    - task: Npm@1
+#      inputs:
+#        command: 'custom'
+#        workingDir: '/home/vsts/work/1/s'
+#        customCommand: 'install newman'
+#      condition: ne(variables['CacheRestored'], 'true')
+#      displayName: Install Newman
+
     - task: Yarn@3
       inputs:
         projectDirectory: '/home/vsts/work/1/s'
