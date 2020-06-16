@@ -39,7 +39,8 @@ stages:
       inputs:
         connection: 'jasonelliott-wwt-pipeline'
         userRepository: 'jasonelliott-wwt/node-express-realworld-example-app'
-        defaultVersionType: 'latest'
+        defaultVersionType: 'specificVersion'
+        version: '27600493'
         downloadPath: '$(System.ArtifactsDirectory)'
     - task: YarnInstaller@3
       inputs:
