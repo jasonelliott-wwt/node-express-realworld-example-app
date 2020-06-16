@@ -39,14 +39,14 @@ stages:
     - script: ls -l /home/vsts/work/1/s
       displayName: Confirm Source Directory Contents
       condition: always()
-    - task: UniversalPackages@0
-      inputs:
-        command: 'publish'
-        publishDirectory: '$(Build.ArtifactStagingDirectory)'
-        feedsToUsePublish: 'internal'
-        vstsFeedPublish: '5231d8a1-0c0d-4c0c-a48a-672567c57865'
-        vstsFeedPackagePublish: 'azure-pipeline-yarn-cache'
-        versionOption: 'patch'
+#    - task: UniversalPackages@0
+#      inputs:
+#        command: 'publish'
+#        publishDirectory: '$(Build.ArtifactStagingDirectory)'
+#        feedsToUsePublish: 'internal'
+#        vstsFeedPublish: '5231d8a1-0c0d-4c0c-a48a-672567c57865'
+#        vstsFeedPackagePublish: 'azure-pipeline-yarn-cache'
+#        versionOption: 'patch'
     - task: RestoreAndSaveCache@1
       inputs:
         keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
