@@ -35,6 +35,11 @@ stages:
       mongodb: mongodb
 
     steps:
+
+    - script: ls -l /home/vsts/work/1/s
+      displayName: Confirm Source Directory Contents
+      condition: always()
+
     - task: YarnInstaller@3
       inputs:
         versionSpec: '1.x'
@@ -62,10 +67,6 @@ stages:
         arguments: 'run test'
         productionMode: true
       displayName: Test Application
-
-    - script: ls -l
-      displayName: Confirm Directory Contents
-      condition: always()
 
     - task: PublishTestResults@2
       inputs:
