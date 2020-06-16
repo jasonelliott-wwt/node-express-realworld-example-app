@@ -50,7 +50,7 @@ stages:
     - task: Npm@1
       inputs:
         command: 'custom'
-        customCommand: 'install newman -g'
+        customCommand: 'install newman'
       displayName: Install Newman Globally on Host
     - task: Yarn@3
       inputs:
