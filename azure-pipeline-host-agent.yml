@@ -45,11 +45,10 @@ stages:
         targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
         vstsFeed: '3648c189-7fde-4b7e-9989-50c8bbb27f33'
         platformIndependent: true
-
-#    - task: YarnInstaller@3
-#      inputs:
-#        versionSpec: '1.x'
-#      displayName: Install Yarn
+    - task: YarnInstaller@3
+      inputs:
+        versionSpec: '1.x'
+      displayName: Install Yarn
     - task: Npm@1
       inputs:
         command: 'custom'
