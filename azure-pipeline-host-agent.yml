@@ -44,6 +44,12 @@ stages:
       mongodb: mongodb
 
     steps:
+    - task: DownloadGitHubRelease@0
+      inputs:
+        connection: 'jasonelliott-wwt-pipeline'
+        userRepository: 'jasonelliott-wwt/node-express-realworld-example-app'
+        defaultVersionType: 'latest'
+        downloadPath: '$(System.ArtifactsDirectory)'
     - task: YarnInstaller@3
       inputs:
         versionSpec: '1.x'
