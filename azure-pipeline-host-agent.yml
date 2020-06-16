@@ -56,8 +56,13 @@ stages:
       displayName: Application Testing
 
     - task: Yarn@3
+      env:
+        NODE_ENV: $(NODE_ENV)
+        MONGODB_URI: $(MONGODB_URI)
+
       inputs:
         arguments: 'run test'
+        productionMode: true
 
     - script: ls -l
       displayName: Confirm Directory Contents
