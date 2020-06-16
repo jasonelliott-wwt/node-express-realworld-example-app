@@ -51,7 +51,7 @@ stages:
       inputs:
         keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
         targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-        feedList: 'azure-pipelines-yarn-modules-caching'
+        feedList: 'node-demo-github/azure-pipelines-yarn-modules-caching'
         platformIndependent: true
 
     - task: YarnInstaller@3
@@ -63,7 +63,7 @@ stages:
       inputs:
         keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
         targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-        feedList: 'azure-pipelines-yarn-modules-caching'
+        feedList: 'node-demo-github/azure-pipelines-yarn-modules-caching'
         platformIndependent: true
 
     - task: Yarn@3
