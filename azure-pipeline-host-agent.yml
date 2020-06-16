@@ -49,8 +49,8 @@ stages:
       displayName: Install Yarn
     - task: Npm@1
       inputs:
-      command: 'custom'
-      customCommand: 'install newman -g'
+        command: 'custom'
+        customCommand: 'install newman -g'
       displayName: Install Newman Globally on Host
     - task: Yarn@3
       inputs:
