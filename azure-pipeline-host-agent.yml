@@ -24,21 +24,12 @@ resources:
           MONGO_INITDB_ROOT_USERNAME: $(MONGO_INITDB_ROOT_USERNAME)
           MONGO_INITDB_ROOT_PASSWORD: $(MONGO_INITDB_ROOT_PASSWORD)
 
-#      - container: node
-#        endpoint: atcsandbox1
-#        image: atcsandbox1.azurecr.io/conduit-svc:mynode8
-#        env:
-#          NODE_ENV: $(NODE_ENV)
-#          MONGODB_URI: $(MONGODB_URI)
-
 stages:
 - stage: BUILD
   jobs:
   - job:
     pool:
       vmImage: 'ubuntu-16.04'
-
-#    container: node
 
     services:
       mongodb: mongodb
