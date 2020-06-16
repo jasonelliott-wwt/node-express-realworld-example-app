@@ -35,14 +35,6 @@ stages:
       mongodb: mongodb
 
     steps:
-    - task: DownloadGitHubRelease@0
-      inputs:
-        connection: 'jasonelliott-wwt-pipeline'
-        userRepository: 'jasonelliott-wwt/node-express-realworld-example-app'
-        defaultVersionType: 'specificVersion'
-        version: '27600493'
-        downloadPath: '$(System.ArtifactsDirectory)'
-      displayName: Pull App from GitHub into Artifacts
     - task: YarnInstaller@3
       inputs:
         versionSpec: '1.x'
