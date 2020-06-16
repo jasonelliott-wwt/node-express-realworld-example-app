@@ -44,20 +44,15 @@ stages:
         command: 'publish'
         publishDirectory: '$(Build.ArtifactStagingDirectory)'
         feedsToUsePublish: 'internal'
-        vstsFeedPublish: '1b1584d5-069f-45c8-a4d7-63d3282ad092/98b88a85-e46f-4966-97c6-3ccdb58f9133'
+        vstsFeedPublish: '5231d8a1-0c0d-4c0c-a48a-672567c57865'
         vstsFeedPackagePublish: 'azure-pipeline-yarn-cache'
         versionOption: 'patch'
-    - task: Cache@2
+    - task: RestoreAndSaveCache@1
       inputs:
-        key: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-        path: '**/node_modules, !**/node_modules/**/node_modules'
-
-#    - task: RestoreAndSaveCache@1
-#      inputs:
-#        keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-#        targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-#        vstsFeed: '98b88a85-e46f-4966-97c6-3ccdb58f9133'
-#        platformIndependent: true
+        keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+        targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+        vstsFeed: '5231d8a1-0c0d-4c0c-a48a-672567c57865'
+        platformIndependent: true
     - task: YarnInstaller@3
       inputs:
         versionSpec: '1.x'
