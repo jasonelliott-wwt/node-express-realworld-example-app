@@ -47,24 +47,33 @@ stages:
         vstsFeedPublish: '1b1584d5-069f-45c8-a4d7-63d3282ad092/98b88a85-e46f-4966-97c6-3ccdb58f9133'
         vstsFeedPackagePublish: 'jasonelliott-wwt.node-demo-host-agent'
         versionOption: 'patch'
-    - task: RestoreCache@1
-      inputs:
-        keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-        targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-        vstsFeed: '98b88a85-e46f-4966-97c6-3ccdb58f9133'
-        platformIndependent: true
+#    - task: RestoreCache@1
+#      inputs:
+#        keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+#        targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+#        vstsFeed: '98b88a85-e46f-4966-97c6-3ccdb58f9133'
+#        platformIndependent: true
 
+    - task: Cache@2
+      inputs:
+        key: 'yarn | "$(Agent.OS)" | yarn.lock'
+        restoreKeys: |
+          yarn | "$(Agent.OS)"
+        path: $(YARN_CACHE_FOLDER)
+      displayName: Cache Yarn packages
+
+    - script: yarn --frozen-lockfile
     - task: YarnInstaller@3
       inputs:
         versionSpec: '1.x'
       displayName: Install Yarn
       condition: ne(variables['CacheRestored'], 'true')
-    - task: SaveCache@1
-      inputs:
-        keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-        targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-        vstsFeed: '98b88a85-e46f-4966-97c6-3ccdb58f9133'
-        platformIndependent: true
+#    - task: SaveCache@1
+#      inputs:
+#        keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+#        targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+#        vstsFeed: '98b88a85-e46f-4966-97c6-3ccdb58f9133'
+#        platformIndependent: true
 
     - task: Yarn@3
       inputs:
