@@ -14,7 +14,8 @@ trigger:
     - master
   paths:
     exclude:
-    - azure-pipeline-*
+    - azure-pipeline-host-agent.yml
+    - azure-pipelines.yml
 
 variables:
   - group: node-demo-var-group
