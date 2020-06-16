@@ -39,6 +39,12 @@ stages:
     - script: ls -l /home/vsts/work/1/s
       displayName: Confirm Source Directory Contents
       condition: always()
+    - task: RestoreAndSaveCache@1
+      inputs:
+        keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+        targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+        vstsFeed: '3648c189-7fde-4b7e-9989-50c8bbb27f33'
+        platformIndependent: true
 
 #    - task: YarnInstaller@3
 #      inputs:
@@ -48,7 +54,7 @@ stages:
       inputs:
         command: 'custom'
         workingDir: '/home/vsts/work/1/s'
-        customCommand: 'install -g newman'
+        customCommand: 'install newman'
       displayName: Install Newman
     - task: Yarn@3
       inputs:
