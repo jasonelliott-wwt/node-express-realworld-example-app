@@ -51,7 +51,7 @@ stages:
       inputs:
         keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
         targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-        vstsFeed: '98b88a85-e46f-4966-97c6-3ccdb58f9133'
+        vstsFeed: $(ArtifactFeed)
         platformIndependent: true
 
     - task: YarnInstaller@3
