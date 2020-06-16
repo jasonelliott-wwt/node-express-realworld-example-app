@@ -46,20 +46,22 @@ stages:
       displayName: Install Newman
     - task: Yarn@3
       inputs:
+        projectDirectory: '/home/vsts/work/1/s'
         arguments: 'run start & sleep 5'
+      displayName: Start Yarn...
 
     - script: curl http://localhost:3000/api/tags
-      displayName: Start Yarn And Get API Tags
+      displayName: ...To Get API Tags
 
     - task: Yarn@3
       env:
         NODE_ENV: $(NODE_ENV)
         MONGODB_URI: $(MONGODB_URI)
       inputs:
-        projectDirectory: 's'
+        projectDirectory: '/home/vsts/work/1/s'
         arguments: 'run test'
         productionMode: true
-      displayName: Test Application Using Newman
+      displayName: Test Application
 
     - script: ls -l
       displayName: Confirm Directory Contents
@@ -69,5 +71,5 @@ stages:
       inputs:
         testResultsFormat: 'JUnit'
         testResultsFiles: '*.xml'
-        searchFolder: './results'
+        searchFolder: '/home/vsts/work/1/s/results'
       condition: always()
