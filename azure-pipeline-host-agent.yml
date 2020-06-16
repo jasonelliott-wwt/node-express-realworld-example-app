@@ -47,8 +47,11 @@ stages:
       inputs:
         versionSpec: '1.x'
       displayName: Install Yarn
-
-
+    - task: Npm@1
+      inputs:
+      command: 'custom'
+      customCommand: 'install newman -g'
+      displayName: Install Newman Globally on Host
     - task: Yarn@3
       inputs:
         arguments: 'run start & sleep 5'
