@@ -25,7 +25,7 @@ resources:
           MONGO_INITDB_ROOT_PASSWORD: $(MONGO_INITDB_ROOT_PASSWORD)
 
 stages:
-- stage: BUILD
+- stage: TEST
   jobs:
   - job:
     pool:
@@ -42,25 +42,28 @@ stages:
         defaultVersionType: 'specificVersion'
         version: '27600493'
         downloadPath: '$(System.ArtifactsDirectory)'
+      displayName: Pull App from GitHub into Artifacts
     - task: YarnInstaller@3
       inputs:
         versionSpec: '1.x'
+      displayName: Install Yarn
+
 
     - task: Yarn@3
       inputs:
         arguments: 'run start & sleep 5'
 
     - script: curl http://localhost:3000/api/tags
-      displayName: Application Testing
+      displayName: Start Yarn And Get API Tags
 
     - task: Yarn@3
       env:
         NODE_ENV: $(NODE_ENV)
         MONGODB_URI: $(MONGODB_URI)
-
       inputs:
         arguments: 'run test'
         productionMode: true
+      displayName: Test Application Using Newman
 
     - script: ls -l
       displayName: Confirm Directory Contents
