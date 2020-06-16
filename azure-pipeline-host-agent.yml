@@ -44,14 +44,14 @@ stages:
         command: 'publish'
         publishDirectory: '$(Build.ArtifactStagingDirectory)'
         feedsToUsePublish: 'internal'
-        vstsFeedPublish: '8f29021a-239f-4bcd-8e2f-658a3311f68a/460ce3f9-4df3-4b21-b0f1-198bc1a4c6fa'
+        vstsFeedPublish: '5231d8a1-0c0d-4c0c-a48a-672567c57865'
         vstsFeedPackagePublish: 'jasonelliott-wwt.node-demo-host-agent'
         versionOption: 'patch'
     - task: RestoreAndSaveCache@1
       inputs:
         keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
         targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-        vstsFeed: '460ce3f9-4df3-4b21-b0f1-198bc1a4c6fa'
+        vstsFeed: '5231d8a1-0c0d-4c0c-a48a-672567c57865'
         platformIndependent: true
 
     - task: YarnInstaller@3
