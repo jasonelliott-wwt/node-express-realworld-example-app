@@ -51,7 +51,7 @@ stages:
       inputs:
         command: 'custom'
         customCommand: 'install newman'
-      displayName: Install Newman Globally on Host
+      displayName: Install Newman
     - task: Yarn@3
       inputs:
         arguments: 'run start & sleep 5'
