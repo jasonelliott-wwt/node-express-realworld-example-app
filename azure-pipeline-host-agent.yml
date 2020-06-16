@@ -56,6 +56,7 @@ stages:
         NODE_ENV: $(NODE_ENV)
         MONGODB_URI: $(MONGODB_URI)
       inputs:
+        projectDirectory: 's'
         arguments: 'run test'
         productionMode: true
       displayName: Test Application Using Newman
