@@ -58,6 +58,7 @@ stages:
       inputs:
         versionSpec: '1.x'
       displayName: Install Yarn
+      condition: ne(variables['CacheRestored'], 'true')
     - task: SaveCache@1
       inputs:
         keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
