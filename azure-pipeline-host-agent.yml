@@ -40,10 +40,10 @@ stages:
       displayName: Confirm Source Directory Contents
       condition: always()
 
-    - task: YarnInstaller@3
-      inputs:
-        versionSpec: '1.x'
-      displayName: Install Yarn
+#    - task: YarnInstaller@3
+#      inputs:
+#        versionSpec: '1.x'
+#      displayName: Install Yarn
     - task: Npm@1
       inputs:
         command: 'custom'
@@ -53,6 +53,7 @@ stages:
       inputs:
         projectDirectory: '/home/vsts/work/1/s'
         arguments: 'run start & sleep 5'
+        productionMode: true
       displayName: Start Yarn...
 
     - script: curl http://localhost:3000/api/tags
