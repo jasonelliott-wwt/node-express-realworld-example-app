@@ -47,7 +47,8 @@ stages:
     - task: Npm@1
       inputs:
         command: 'custom'
-        customCommand: 'install newman'
+        workingDir: '/home/vsts/work/1/s'
+        customCommand: 'install -g newman'
       displayName: Install Newman
     - task: Yarn@3
       inputs:
