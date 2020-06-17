@@ -54,9 +54,7 @@ stages:
         vstsFeed: '5231d8a1-0c0d-4c0c-a48a-672567c57865'
         platformIndependent: true
 
-    - task: YarnInstaller@3
-      inputs:
-        versionSpec: '1.x'
+    - script: yarn install --frozen-lockfile
       displayName: Install Yarn
       condition: ne(variables['CacheRestored'], 'true')
 
