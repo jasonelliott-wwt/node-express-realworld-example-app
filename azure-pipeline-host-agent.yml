@@ -60,15 +60,10 @@ stages:
       displayName: Install Yarn
       condition: ne(variables['CacheRestored'], 'true')
 
-    - task: Yarn@3
-      inputs:
-        projectDirectory: '/home/vsts/work/1/s'
-        arguments: 'run start & sleep 5'
-        productionMode: true
-      displayName: Start Yarn...
-
-    - script: curl http://localhost:3000/api/tags
-      displayName: ...To Get API Tags
+    - script: |
+        yarn run start & sleep 5
+        curl http://localhost:3000/api/tags
+      displayName: Start Yarn And Get API Tags
 
     - task: Yarn@3
       env:
