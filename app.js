@@ -31,10 +31,10 @@ if (!isProduction) {
 }
 
 if(isProduction){
-  mongoose.connect(process.env.MONGODB_URI);
+  mongoose.connect(process.env.MONGODB_URI_CONTAINER);
 } else {
-  mongoose.connect('mongodb://localhost:27017/conduit');
-  mongoose.set('debug', true);
+  mongoose.connect(process.env.MONGODB_URI_HOST);
+//  mongoose.set('debug', true);
 }
 
 require('./models/User');
