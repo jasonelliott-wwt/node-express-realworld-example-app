@@ -63,7 +63,7 @@ stages:
     - task: Yarn@3
       inputs:
         projectDirectory: '/home/vsts/work/1/s'
-        arguments: 'run start & sleep 5'
+        arguments: 'run start'
         productionMode: true
       displayName: Start Yarn...
 
