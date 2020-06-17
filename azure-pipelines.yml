@@ -9,13 +9,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-  branches:
-    include:
-    - master
-  paths:
-    exclude:
-    - azure-pipeline-host-agent.yml
-    - azure-pipelines.yml
+  - none
 
 variables:
   - group: node-demo-var-group
