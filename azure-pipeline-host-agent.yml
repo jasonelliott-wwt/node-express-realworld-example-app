@@ -68,7 +68,7 @@ stages:
     - task: Yarn@3
       env:
         NODE_ENV: $(NODE_ENV)
-        MONGODB_URI: $(MONGODB_URI)
+        MONGODB_URI: $(MONGODB_URI_HOST)
       inputs:
         projectDirectory: '/home/vsts/work/1/s'
         arguments: 'run test'
