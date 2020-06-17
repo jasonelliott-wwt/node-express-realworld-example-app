@@ -31,10 +31,10 @@ if (!isProduction) {
 }
 
 if(isProduction){
-  mongoose.connect(process.env.MONGODB_URI_CONTAINER);
+  mongoose.connect(process.env.MONGODB_URI);
 } else {
-  mongoose.connect(process.env.MONGODB_URI_HOST);
-//  mongoose.set('debug', true);
+  mongoose.connect(process.env.MONGODB_URI_CONDUIT);
+  mongoose.set('debug', true);
 }
 
 require('./models/User');
