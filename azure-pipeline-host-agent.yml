@@ -40,22 +40,6 @@ stages:
       displayName: Confirm Source Directory Contents
       condition: always()
 
-# package caching - try it later
-#    - task: UniversalPackages@0
-#      inputs:
-#        command: 'publish'
-#        publishDirectory: '$(Build.ArtifactStagingDirectory)'
-#        feedsToUsePublish: 'internal'
-#        vstsFeedPublish: '5231d8a1-0c0d-4c0c-a48a-672567c57865'
-#        vstsFeedPackagePublish: 'jasonelliott-wwt.node-demo-host-agent'
-#        versionOption: 'patch'
-#    - task: RestoreAndSaveCache@1
-#      inputs:
-#      keyfile: '**/yarn.lock, **/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-#      targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-#      vstsFeed: '5231d8a1-0c0d-4c0c-a48a-672567c57865'
-#      platformIndependent: true
-
     - script: yarn install --frozen-lockfile
       displayName: Install Yarn
       condition: ne(variables['CacheRestored'], 'true')
